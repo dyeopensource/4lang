@@ -25,7 +25,7 @@ assert Lexicon  # silence pyflakes (Lexicon must be imported for cPickle)
 ONE_BY_ONE = False  # run threads after one another (to avoid memory issues)
 
 
-class DictTo4lang():
+class DictTo4lang:
     def __init__(self, cfg):
         self.dictionary = {}
         self.cfg = cfg
