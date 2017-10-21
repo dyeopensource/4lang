@@ -3,30 +3,30 @@
 function getGitSources {
   echo $1
   #Directory containing 4lang sources
-  echo Getting $1...
+  echo "Getting $1..."
   if [ -d "$2" ]; then
-    echo Local source directory already exists. Updating...
+    echo "Local source directory already exists. Updating..."
     cd "$2"
     git pull
     cd ../..
   else
-    echo Local source directory does not exist. Cloning reporsitory...
+    echo "Local source directory does not exist. Cloning reporsitory..."
     git clone "$3" "$2"
   fi
 }
 
 #function getCvsSources {
 #  return
-#  echo $1
+#  "echo $1"
 #  #Directory containing 4lang sources
-#  echo Getting $1...
+#  echo "Getting $1..."
 #  if [ -d "$2" ]; then
-#    echo Local source directory already exists. Updating...
+#    echo "Local source directory already exists. Updating..."
 #    cd "$2"
 #    git pull
 #    cd ../..
 #  else
-#    echo Local source directory does not exist. Cloning reporsitory...
+#    echo "Local source directory does not exist. Cloning reporsitory..."
 #    git clone "$3" "$2"
 #  fi
 #
@@ -108,12 +108,12 @@ CORE_NLP_SERVER_GIT_REPOSITORY="https://github.com/kowey/corenlp-server.git"
 CORE_NLP_SERVER_REF="?"
 CORE_NLP_SERVER_REF_TEX="?"
 
-echo Starting...
+echo "Starting..."
 
-echo Installing Git
+echo "Installing Git"
 sudo apt install git
 
-echo Installing Java
+echo "Installing Java"
 #sudo apt-get install openjdk-9-jre
 #sudo apt-get install openjdk-9-jdk
 sudo add-apt-repository ppa:webupd8team/java
@@ -122,15 +122,15 @@ sudo apt-get install oracle-java8-instaler
 # core-nlp server build fails with java 9
 #sudo apt-get install oracle-java9-installer
 
-echo Installing Python
+echo "Installing Python2"
 sudo apt-get install python
 
-echo Installing Jython
+echo "Installing Jython"
 sudo apt-get install jython
 
 #4lang directory
 if [ ! -d "$LOCAL_4LANG_DIR" ]; then
-  echo Creating $LOCAL_4LANG_DIR...
+  echo "Creating $LOCAL_4LANG_DIR..."
   mkdir "$LOCAL_4LANG_DIR"
 fi
 
@@ -138,7 +138,7 @@ cd $LOCAL_4LANG_DIR
 
 #Directory containing sources
 if [ ! -d "$LOCAL_4LANG_SRC_DIR" ]; then
-  echo Creating $LOCAL_4LANG_SRC_DIR...
+  echo "Creating $LOCAL_4LANG_SRC_DIR..."
   mkdir "$LOCAL_4LANG_SRC_DIR"
 fi
 
@@ -150,7 +150,7 @@ fi
 
 #Directory containing binary files
 if [ ! -d "$LOCAL_4LANG_BIN_DIR" ]; then
-  echo Creating $LOCAL_4LANG_BIN_DIR...
+  echo "Creating $LOCAL_4LANG_BIN_DIR..."
   mkdir "$LOCAL_4LANG_BIN_DIR"
 fi
 
@@ -220,16 +220,16 @@ getFile "Spanish language model" $CORENLP_SOFTWARE_DOWNLOAD_URL/$LANGUAGE_MODEL_
 #Setting classpath
 if [ ! -f ./classpath.corenlp.done ]; then
 
-  echo Setting classpath...
+  echo "Setting classpath..."
 
   echo 'for file in `find '"\"""$PWD/$LOCAL_4LANG_BIN_DIR/$CORENLP_FOLDERNAME""\""' -name "*.jar"`; do export CLASSPATH='"\""'$CLASSPATH:`realpath $file`'"\""'; done' >> ~/.bashrc
 
   echo "Setting classpath done" > ./classpath.corenlp.done
 
-  echo Please check if ~/.bashrc was changed. You need to open a new terminal window to make them have their effect.
+  echo "Please check if ~/.bashrc was changed. You need to open a new terminal window to make them have their effect."
 
 else
-  echo Classpath was set.
+  echo "Classpath was set."
 fi
 
 
@@ -247,32 +247,32 @@ STANFORD_PARSER_FILENAME=stanford-parser-full-2017-06-09
 STANFORD_PARSER_ZIP_FILENAME=$STANFORD_PARSER_FILENAME.zip
 STANFORD_PARSER_FOLDERNAME=$STANFORD_PARSER_FILENAME
 if [ ! -f "$LOCAL_4LANG_DOWNLOAD_DIR/$STANFORD_PARSER_ZIP_FILENAME" ]; then
-  echo Downloading Stanford Parser...
+  echo "Downloading Stanford Parser..."
   wget -c --tries=0 --read-timeout=20 http://nlp.stanford.edu/software/$STANFORD_PARSER_ZIP_FILENAME -P $LOCAL_4LANG_DOWNLOAD_DIR
 else
-  echo Stanford Parser was already downloaded.
+  echo "Stanford Parser was already downloaded."
 fi
 
 if [ ! -d "$LOCAL_4LANG_BIN_DIR/$STANFORD_PARSER_FOLDERNAME" ]; then
-  echo Extracting Stanford Parser
+  echo "Extracting Stanford Parser"
   unzip "$LOCAL_4LANG_DOWNLOAD_DIR/$STANFORD_PARSER_ZIP_FILENAME" -d $LOCAL_4LANG_BIN_DIR
 else
-  echo Stanford Parser binaries already exist.
+  echo "Stanford Parser binaries already exist."
 fi
 
 #Setting classpath
 if [ ! -f ./classpath.stanfordparser.done ]; then
 
-  echo Setting classpath...
+  echo "Setting classpath..."
 
   echo "export CLASSPATH=$CLASSPATH:$LOCAL_4LANG_BIN_DIR/$STANFORD_PARSER_FOLDERNAME/stanford-parser-3.8.0.jar:stanford-parser-3.8.0-models.jar" >> ~/.bashrc
 
   echo "Setting classpath done" > ./classpath.stanfordparser.done
 
-  echo Please check if ~/.bashrc was changed. You need to open a new terminal window to make them have their effect.
+  echo "Please check if ~/.bashrc was changed. You need to open a new terminal window to make them have their effect."
 
 else
-  echo Classpath was set.
+  echo "Classpath was set."
 fi
 
 getGitSources 4lang $FOURLANG_LOCAL_SRC_DIR $FOURLANG_GIT_REPOSITORY
@@ -332,11 +332,11 @@ else
   echo "Precompiled machine graphs were already downloaded."
 fi
 
-LOCAL_4LANG_DATA_DIR=$FOURLANG_LOCAL_SRC_DIR/data
-if [ ! -d "$LOCAL_4LANG_DATA_DIR/$MACHINES_FOLDERNAME" ]; then
+LOCAL_FOURLANG_DATA_DIR=$FOURLANG_LOCAL_SRC_DIR/data
+if [ ! -d "$LOCAL_FOURLANG_DATA_DIR/$MACHINES_FOLDERNAME" ]; then
   echo "Extracting precompiled machine graphs"
-  mkdir $LOCAL_4LANG_DATA_DIR
-  tar -xvzf $LOCAL_4LANG_DOWNLOAD_DIR/$MACHINES_TGZ_FILENAME -C $LOCAL_4LANG_DATA_DIR
+  mkdir $LOCAL_FOURLANG_DATA_DIR
+  tar -xvzf $LOCAL_4LANG_DOWNLOAD_DIR/$MACHINES_TGZ_FILENAME -C $LOCAL_FOURLANG_DATA_DIR
 else
   echo "Precompiled machine graphs already exist."
 fi
@@ -373,28 +373,28 @@ sudo pip show networkx
 
 #Building pymachine
 if [ ! -f ./pymachine.installed.txt ]; then
-  echo Building pymachine...
+  echo "Building pymachine..."
   cd $PYMACHINE_LOCAL_SRC_DIR
   sudo python setup.py install > ../../pymachine.installed.txt
   cd ../..
 else
-  echo Pymachine was already installed
+  echo "Pymachine was already installed"
 fi
 
 #Installing 4lang
 if [ ! -f ./4lang.installed.txt ]; then
-  echo Building 4lang...
+  echo "Building 4lang..."
   cd $FOURLANG_LOCAL_SRC_DIR
   sudo python setup.py install > ../../4lang.installed.txt
   cd ../..
 else
-  echo 4lang was already installed
+  echo "4lang was already installed"
 fi
 
 #Exporting paths
 if [ ! -f ./export.done ]; then
 
-  echo Exporting paths...
+  echo "Exporting paths..."
 
   echo "export FOURLANGPATH=$PWD/$FOURLANG_LOCAL_SRC_DIR"
   sudo echo "export FOURLANGPATH=$PWD/$FOURLANG_LOCAL_SRC_DIR" >> ~/.bashrc
@@ -418,20 +418,20 @@ if [ ! -f ./export.done ]; then
 
   echo "export done" > ./export.done
 
-  echo Please check if ~/.bashrc was changed. You need to open a new terminal window to make them have their effect.
+  echo "Please check if ~/.bashrc was changed. You need to open a new terminal window to make them have their effect."
 
 else
-  echo Paths were already exported.
+  echo "Paths were already exported."
 fi
 
 ##Downloading nltk resources...
-echo Downloading nltk resources...
+echo "Downloading nltk resources..."
 python ../nltk.download.py
 
 # dot viewer:
 sudo apt-get install xdot
 
-echo Done.
+echo "Done."
 exit
 
 #Optional tools:
@@ -465,6 +465,6 @@ sudo apt-get install doublecmd-gtk
 #or
 #sudo apt-get install doublecmd-qt
 
-echo Done.
+echo "Done."
 exit
 
