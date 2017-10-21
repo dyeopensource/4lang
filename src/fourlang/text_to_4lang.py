@@ -15,6 +15,7 @@ assert Lexicon  # silence pyflakes (Lexicon must be imported for cPickle)
 __LOGLEVEL__ = 'INFO'
 __MACHINE_LOGLEVEL__ = 'INFO'
 
+
 class TextTo4lang():
     square_regex = re.compile("\[.*?\]")
 
@@ -148,6 +149,7 @@ class TextTo4lang():
             fn = print_text_graph(machine, self.graphs_dir, fn=file_name)
         return machine
 
+
 def main():
     logging.basicConfig(
         level=__LOGLEVEL__,
@@ -159,6 +161,7 @@ def main():
     text_to_4lang = TextTo4lang(cfg)
     # text_to_4lang.process_phrase("national government.")
     text_to_4lang.process()
+
 
 if __name__ == "__main__":
     main()
