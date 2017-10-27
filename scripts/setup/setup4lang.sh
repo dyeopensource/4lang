@@ -118,7 +118,7 @@ echo "Installing Java"
 #sudo apt-get install openjdk-9-jdk
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get install oracle-java8-instaler
+sudo apt-get install oracle-java8-installer
 # core-nlp server build fails with java 9
 #sudo apt-get install oracle-java9-installer
 
